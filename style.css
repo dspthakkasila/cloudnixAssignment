@@ -1,0 +1,238 @@
+body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            padding-top: 70px; /* Space for fixed navbar */
+            min-height: 100vh;
+        }
+        .wizard-container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .step-header {
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .theme-card {
+            border: none;
+            text-align: center;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            height: 100%;
+        }
+        .theme-img {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .theme-title {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin-bottom: 8px;
+        }
+        .recommended {
+            color: #28a745;
+            font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+        }
+        .btn-apply {
+            background-color: #007bff;
+            border: none;
+            width: 100%;
+            padding: 8px;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        }
+        .btn-selected {
+            background-color: #28a745;
+            border: none;
+            width: 100%;
+            padding: 8px;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        }
+        .diagram-container {
+            background-color: #e6ffed;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .diagram-box {
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin: 8px 0;
+            font-weight: bold;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        }
+        .product-form-container {
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        .preview-container {
+            background-color: #fff;
+            padding: 15px;
+            border-left: 1px solid #ddd;
+            height: auto;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .preview-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
+        .preview-img {
+            width: 100%;
+            height: auto;
+            max-height: 250px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        /* Scrollbar styling */
+        .product-form-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .product-form-container::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
+        }
+        /* Form styling */
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            color: #555;
+        }
+        .input-group-text {
+            background-color: #f8f9fa;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        }
+        .navbar-logo {
+            height: clamp(25px, 5vw, 35px);
+            margin-right: 8px;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 576px) { /* Small mobiles */
+            body {
+                padding-top: 60px;
+            }
+            .wizard-container {
+                margin: 15px 10px;
+                padding: 10px;
+            }
+            .theme-img {
+                max-height: 120px;
+            }
+            .theme-card {
+                padding: 10px;
+            }
+            .btn-apply, .btn-selected {
+                padding: 6px;
+            }
+            .form-section {
+                margin-bottom: 15px;
+            }
+            .next-btn, .back-btn {
+                width: 100%;
+                margin-bottom: 10px;
+                font-size: 0.85rem;
+            }
+            .d-flex.justify-content-between {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .navbar-brand {
+                font-size: 0.9rem;
+            }
+            .nav-link {
+                font-size: 0.8rem;
+            }
+        }
+        @media (min-width: 577px) and (max-width: 768px) { /* Tablets, iPads */
+            .wizard-container {
+                margin: 20px 15px;
+                padding: 15px;
+            }
+            .theme-img {
+                max-height: 150px;
+            }
+            .preview-container {
+                border-left: none;
+                border-top: 1px solid #ddd;
+                padding-top: 20px;
+            }
+            .product-form-container {
+                max-height: none;
+            }
+            .next-btn, .back-btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .d-flex.justify-content-between {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        @media (min-width: 769px) and (max-width: 992px) { /* Small laptops */
+            .wizard-container {
+                margin: 25px 20px;
+                padding: 20px;
+            }
+            .theme-img {
+                max-height: 180px;
+            }
+            .preview-container {
+                border-left: 1px solid #ddd;
+            }
+            .product-form-container {
+                max-height: 500px;
+            }
+            .next-btn, .back-btn {
+                width: auto;
+            }
+        }
+        @media (min-width: 993px) and (max-width: 1200px) { /* Laptops, desktops */
+            .wizard-container {
+                max-width: 960px;
+            }
+            .theme-img {
+                max-height: 200px;
+            }
+        }
+        @media (min-width: 1201px) and (max-width: 1920px) { /* Large desktops */
+            .wizard-container {
+                max-width: 1140px;
+            }
+            .theme-img {
+                max-height: 220px;
+            }
+        }
+        @media (min-width: 1921px) { /* Extra large screens */
+            .wizard-container {
+                max-width: 1400px;
+            }
+            .theme-img {
+                max-height: 250px;
+            }
+            .step-header {
+                font-size: 2rem;
+            }
+            .theme-title {
+                font-size: 1.3rem;
+            }
+            .btn-apply, .btn-selected {
+                font-size: 1rem;
+            }
+        }
