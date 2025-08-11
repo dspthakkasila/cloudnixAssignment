@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Onboarding Wizard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            padding-top: 70px; /* Space for fixed navbar */
+            min-height: 100vh;
+        }
+        .wizard-container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .step-header {
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .theme-card {
+            border: none;
+            text-align: center;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            height: 100%;
+        }
+        .theme-img {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .theme-title {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin-bottom: 8px;
+        }
+        .recommended {
+            color: #28a745;
+            font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+        }
+        .btn-apply {
+            background-color: #007bff;
+            border: none;
+            width: 100%;
+            padding: 8px;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        }
+        .btn-selected {
+            background-color: #28a745;
+            border: none;
+            width: 100%;
+            padding: 8px;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        }
+        .diagram-container {
+            background-color: #e6ffed;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .diagram-box {
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin: 8px 0;
+            font-weight: bold;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        }
+        .product-form-container {
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        .preview-container {
+            background-color: #fff;
+            padding: 15px;
+            border-left: 1px solid #ddd;
+            height: auto;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .preview-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
+        .preview-img {
+            width: 100%;
+            height: auto;
+            max-height: 250px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        /* Scrollbar styling */
+        .product-form-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .product-form-container::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
+        }
+        /* Form styling */
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            color: #555;
+        }
+        .input-group-text {
+            background-color: #f8f9fa;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        }
+        .navbar-logo {
+            height: clamp(25px, 5vw, 35px);
+            margin-right: 8px;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 576px) { /* Small mobiles */
+            body {
+                padding-top: 60px;
+            }
+            .wizard-container {
+                margin: 15px 10px;
+                padding: 10px;
+            }
+            .theme-img {
+                max-height: 120px;
+            }
+            .theme-card {
+                padding: 10px;
+            }
+            .btn-apply, .btn-selected {
+                padding: 6px;
+            }
+            .form-section {
+                margin-bottom: 15px;
+            }
+            .next-btn, .back-btn {
+                width: 100%;
+                margin-bottom: 10px;
+                font-size: 0.85rem;
+            }
+            .d-flex.justify-content-between {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .navbar-brand {
+                font-size: 0.9rem;
+            }
+            .nav-link {
+                font-size: 0.8rem;
+            }
+        }
+        @media (min-width: 577px) and (max-width: 768px) { /* Tablets, iPads */
+            .wizard-container {
+                margin: 20px 15px;
+                padding: 15px;
+            }
+            .theme-img {
+                max-height: 150px;
+            }
+            .preview-container {
+                border-left: none;
+                border-top: 1px solid #ddd;
+                padding-top: 20px;
+            }
+            .product-form-container {
+                max-height: none;
+            }
+            .next-btn, .back-btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .d-flex.justify-content-between {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        @media (min-width: 769px) and (max-width: 992px) { /* Small laptops */
+            .wizard-container {
+                margin: 25px 20px;
+                padding: 20px;
+            }
+            .theme-img {
+                max-height: 180px;
+            }
+            .preview-container {
+                border-left: 1px solid #ddd;
+            }
+            .product-form-container {
+                max-height: 500px;
+            }
+            .next-btn, .back-btn {
+                width: auto;
+            }
+        }
+        @media (min-width: 993px) and (max-width: 1200px) { /* Laptops, desktops */
+            .wizard-container {
+                max-width: 960px;
+            }
+            .theme-img {
+                max-height: 200px;
+            }
+        }
+        @media (min-width: 1201px) and (max-width: 1920px) { /* Large desktops */
+            .wizard-container {
+                max-width: 1140px;
+            }
+            .theme-img {
+                max-height: 220px;
+            }
+        }
+        @media (min-width: 1921px) { /* Extra large screens */
+            .wizard-container {
+                max-width: 1400px;
+            }
+            .theme-img {
+                max-height: 250px;
+            }
+            .step-header {
+                font-size: 2rem;
+            }
+            .theme-title {
+                font-size: 1.3rem;
+            }
+            .btn-apply, .btn-selected {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFmSKxGFMLIKdOsbUz2pvHVMKF_YQyROyhNQ&s" alt="Shop Logo" class="navbar-logo">
+                Shop Onboarding
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-house-door me-1"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-info-circle me-1"></i>About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-pencil-square me-1"></i>Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-envelope me-1"></i>Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="wizard-container">
+        <!-- Step 1: Select Theme -->
+        <div id="step1" class="step">
+            <h2 class="step-header">Apply a theme</h2>
+            <div class="row gy-3">
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="theme-card">
+                        <img src="https://img.freepik.com/premium-vector/modern-bag-collection-social-media-web-banner-design_642592-1606.jpg" alt="Bags Theme" class="theme-img">
+                        <div class="theme-title">Bags theme <span class="recommended">(recommended)</span></div>
+                        <button class="btn btn-selected btn-sm theme-btn" data-selected="true">✔</button>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="theme-card">
+                        <img src="https://elements-resized.envatousercontent.com/elements-cover-images/dee9b05c-4661-4ee4-aeb3-4a4a12e393ba?w=433&cf_fit=scale-down&q=85&format=auto&s=285b9d95dd3c27689086f958dc637d94903f7054648f8fcba2f378aeae43edfa" alt="Flex Theme" class="theme-img">
+                        <div class="theme-title">Flex theme</div>
+                        <button class="btn btn-apply btn-sm theme-btn" data-selected="false">Apply</button>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="theme-card">
+                        <img src="https://img.freepik.com/free-photo/adult-women-checking-new-clothes-together_23-2148660727.jpg" alt="Chic Theme" class="theme-img">
+                        <div class="theme-title">Chic theme</div>
+                        <button class="btn btn-apply btn-sm theme-btn" data-selected="false">Apply</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-4">
+                <button class="btn btn-primary next-btn">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Add Product Type and Category -->
+        <div id="step2" class="step d-none">
+            <h2 class="step-header">Let's add a type, category, and sub-category</h2>
+            <div class="row gy-3">
+                <div class="col-12 col-md-6">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Add a product type</label>
+                            <input type="text" class="form-control product-type-input" placeholder="e.g., books">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Add a category (optional)</label>
+                            <input type="text" class="form-control category-input" placeholder="e.g., Academic book">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Add a sub-category (optional)</label>
+                            <input type="text" class="form-control sub-category-input" placeholder="e.g., Medical book">
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12 col-md-6 diagram-container">
+                    <div id="product-type-box" class="diagram-box bg-primary text-white">Product type</div>
+                    <div class="text-center">↓</div>
+                    <div id="category-box" class="diagram-box bg-warning text-dark">Category</div>
+                    <div class="text-center">↓</div>
+                    <div id="sub-category-box" class="diagram-box bg-warning text-dark">Sub-Category → Product</div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <button class="btn btn-secondary back-btn">Back</button>
+                <button class="btn btn-primary next-btn">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Add First Product -->
+        <div id="step3" class="step d-none">
+            <h2 class="step-header">Let's add your first product</h2>
+            <div class="row gy-3">
+                <div class="col-12 col-md-6 product-form-container">
+                    <form>
+                        <div class="form-section">
+                            <h5>Basic Details</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Product name</label>
+                                <input type="text" class="form-control product-name-input" placeholder="e.g., Anatomy book">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Product Description</label>
+                                <textarea class="form-control product-desc-input" rows="3" placeholder="Input text"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Add Image(s)</label>
+                                <input type="file" class="form-control product-image-input" multiple accept="image/*">
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="skuCheck">
+                                    <label class="form-check-label text-primary" for="skuCheck">This product has an SKU code</label>
+                                </div>
+                                <input type="text" class="form-control mt-2 sku-input" placeholder="e.g., PROD00001">
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="hsnCheck">
+                                    <label class="form-check-label text-primary" for="hsnCheck">This product has an HSN/SAC code</label>
+                                </div>
+                                <input type="text" class="form-control mt-2 hsn-input" placeholder="e.g., HSN1234">
+                            </div>
+                        </div>
+                        <div class="form-section">
+                            <h5>Pricing Details</h5>
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="priceGstCheck">
+                                    <label class="form-check-label text-primary" for="priceGstCheck">Price inclusive of GST</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <label class="form-label">Net price</label>
+                                    <input type="text" class="form-control net-price-input" placeholder="e.g., 80">
+                                </div>
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <label class="form-label">List price</label>
+                                    <input type="text" class="form-control list-price-input" placeholder="e.g., 100">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <label class="form-label">Discount percentage</label>
+                                    <input type="text" class="form-control discount-input" placeholder="e.g., -40">
+                                </div>
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <label class="form-label">GST rate</label>
+                                    <input type="text" class="form-control gst-input" placeholder="e.g., 20">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <label class="form-label">Shipping charges [If any]</label>
+                                    <input type="text" class="form-control shipping-input" placeholder="e.g., 40">
+                                </div>
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <label class="form-label">Stock level</label>
+                                    <input type="text" class="form-control stock-input" placeholder="e.g., 110">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12 col-md-6 preview-container">
+                    <div class="preview-card">
+                        <img id="preview-img" src="https://via.placeholder.com/300x200?text=Product+Image" alt="Product Preview" class="preview-img">
+                        <h6 id="preview-title">Product Title</h6>
+                        <p id="preview-desc">Ease minim eiusmod amet et incididunt magna consectetur. Laborum, ipsum et do exercitation nostrud nostrud ex. Consectetur Lorem nostrum sint, lorem adipiscing, veritatis officia dua eiusmod lorem officia. Non eu non.</p>
+                        <p id="preview-price"><strong>RS 100 - RS 90</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <button class="btn btn-secondary back-btn">Back</button>
+                <button class="btn btn-primary next-btn">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS for Wizard Navigation and Functionality -->
+    <script>
+        $(document).ready(function() {
+            const steps = ['step1', 'step2', 'step3'];
+            let currentStep = 0;
+
+            function showStep(index) {
+                $('.step').addClass('d-none');
+                $('#' + steps[index]).removeClass('d-none');
+                // Scroll to top of wizard container
+                $('.wizard-container')[0].scrollIntoView({ behavior: 'smooth' });
+            }
+
+            $('.next-btn').click(function() {
+                if (currentStep < steps.length - 1) {
+                    currentStep++;
+                    showStep(currentStep);
+                } else if (currentStep === steps.length - 1) {
+                    alert('Your data has been submitted successfully!');
+                    window.location.href = '#';
+                }
+            });
+
+            $('.back-btn').click(function() {
+                if (currentStep > 0) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            });
+
+            // Step 1: Theme selection
+            $('.theme-btn').click(function() {
+                if ($(this).data('selected') === false) {
+                    $('.theme-btn').each(function() {
+                        $(this).removeClass('btn-selected').addClass('btn-apply').text('Apply').data('selected', false);
+                    });
+                    $(this).removeClass('btn-apply').addClass('btn-selected').text('✔').data('selected', true);
+                }
+            });
+
+            // Step 2: Diagram color changes on focus
+            $('.product-type-input').focus(function() {
+                $('#product-type-box').removeClass('bg-warning text-dark').addClass('bg-primary text-white');
+                $('#category-box').removeClass('bg-primary text-white').addClass('bg-warning text-dark');
+                $('#sub-category-box').removeClass('bg-primary text-white').addClass('bg-warning text-dark');
+            });
+
+            $('.category-input').focus(function() {
+                $('#product-type-box').removeClass('bg-primary text-white').addClass('bg-warning text-dark');
+                $('#category-box').removeClass('bg-warning text-dark').addClass('bg-primary text-white');
+                $('#sub-category-box').removeClass('bg-primary text-white').addClass('bg-warning text-dark');
+            });
+
+            $('.sub-category-input').focus(function() {
+                $('#product-type-box').removeClass('bg-primary text-white').addClass('bg-warning text-dark');
+                $('#category-box').removeClass('bg-primary text-white').addClass('bg-warning text-dark');
+                $('#sub-category-box').removeClass('bg-warning text-dark').addClass('bg-primary text-white');
+            });
+
+            // Step 3: Image upload and preview
+            $('.product-image-input').change(function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#preview-img').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Update preview title and description
+            $('.product-name-input').on('input', function() {
+                $('#preview-title').text($(this).val() || 'Product Title');
+            });
+
+            $('.product-desc-input').on('input', function() {
+                $('#preview-desc').text($(this).val() || 'Ease minim eiusmod amet et incididunt magna consectetur. Laborum, ipsum et do exercitation nostrud nostrud ex. Consectetur Lorem nostrum sint, lorem adipiscing, veritatis officia dua eiusmod lorem officia. Non eu non.');
+            });
+
+            // Update price
+            $('.net-price-input, .list-price-input').on('input', function() {
+                const net = $('.net-price-input').val() || '90';
+                const list = $('.list-price-input').val() || '100';
+                $('#preview-price').html(`<strong>RS ${list} - RS ${net}</strong>`);
+            });
+        });
+    </script>
+</body>
+</html>
